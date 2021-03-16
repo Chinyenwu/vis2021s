@@ -42,8 +42,8 @@
   <path d="M448  0 V512" stroke="lightgray" fill="white"></path>
   <text x="438" y="12" font-size="12" text-anchor="start" fill="red">448</text>
   <text x="492" y="12" font-size="12" text-anchor="start" fill="red">512</text>
-  <path d="M270 425 C320 400,330 400,370,420 S410 435, 448 384 M192 0 170 64 230 64 192 128 M224 490  160 490 M224 320 A5 5, 0, 1, 1, 160 320 M0 125 , 390 125 ,M390 125 , 390 384 M390 384 , 0 384 M0 384 , 0 125 M0 235 , 110 235 M280 235 , 390 235" stroke-width="10" stroke="blue" fill="none" opacity="0.3"/>
-  <path d="M256 256 V270 V242 M256 256 H270 H242" stroke="black" fill="white"></path>
+  <path d="M512 335 495 340 500 350 485 355 M435 310 430 330 440 330 435 350 M458 370,470 350 M448 360,460 340 M440 355 A18 20, 0, 1, 0, 470 370z M243 445 A20 30, 0, 1, 0, 243.1 445 M143 445 A20 30, 0, 1, 0, 143.1 445 M150 384 T128 460 M240 384 265 460 M240 384 Q340 490,300 490 T265 460 M150 384 Q50 490,90 490 T128 460 M270 425 C320 400,330 400,370,420 S410 435, 448 384 M192 0 170 64 230 64 192 128 M224 490  160 490 M224 320 A5 5, 0, 1, 1, 160 320 M0 125 , 390 125 ,M390 125 , 390 384 M390 384 , 0 384 M0 384 , 0 125 M0 235 , 110 235 M280 235 , 390 235" stroke-width="10" stroke="blue" fill="none" opacity="0.3"/>
+  <path d=" M256 256 V270 V242 M256 256 H270 H242" stroke="black" fill="white"></path>
   <text x="254" y="250" font-size="16" text-anchor="middle" fill="red">(256, 256)</text>
 </svg>
     
