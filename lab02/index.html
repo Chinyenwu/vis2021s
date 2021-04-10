@@ -119,8 +119,13 @@
                         treemapContainer.appendChild(node)
                     })
 				})
-
-				document.getElementById('dropfile').addEventListener('dragover',function(evt){
+				dataLoader('./桃園市110年每月觀光遊憩區遊客人次資料.csv', function(){
+					dataClassifier(objectKeys.value, function(data, layers){
+					    node = getNode(data, layers, treemapContainer)
+					    treemapContainer.append(node)
+					})
+				})//add
+				/*document.getElementById('dropfile').addEventListener('dragover',function(evt){
 					evt.preventDefault()
 				})
 
@@ -154,7 +159,7 @@
 
 						fr.readAsText(csvFile)
 					}
-				})
+				})*/
 			})
 		</script>
 
