@@ -1,14 +1,154 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>D3 Page Template</title>
+    <title>Lab 7</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+
+        h1, div {
+          background-color: rgba(255, 255, 0, 0.1);
+          font-family: 'Noto Serif JP', serif;
+          font-size: 24pt;
+          border: solid 1px black;
+          width: 90%;
+          margin: 5px auto;
+          padding: 10px;
+        }
+
+        div {
+          font-size: 12pt;
+        }
+
+        body {
+            background-color: rgba(255, 128, 255, 0.1);
+        }
+
+        video:hover {
+            box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
+    </style>
     <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
 </head>
 <body>
+    <h1>
+        lab07 漢字變形 Path Transitions
+    </h1>
+    <div>
+      限定使用 D3.js，參考以下影片。
+    	<ul>
+    		<li><a href="https://bocoup.com/blog/improving-d3-path-animation">Improving D3 Path Animation</a></li>
+    		<li><a href="https://bost.ocks.org/mike/path/">https://bost.ocks.org/mike/path/</a></li>
+    	</ul>
+    </div>
+
+    <div>
+  		<video width="400" controls loop autoplay>
+  		  <source src="2.mp4" type="video/mp4">
+  		</video>
+    </div>
+
+    <div>
+      展示區 (姓名)
+      <hr>
+
+      <img width="256" src="./uni5433_FZSJSK--GBK1-0.svg">
+      <img width="256" src="./uni4FCA_FZSJSK--GBK1-0.svg">
+      <img width="256" src="./uni8AFA_FZSJSK--GBK1-0.svg">
+
+
+     </svg>-->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1000" height="240" style="display:inline;">
+        <g transform="matrix(1 0 0 -1 0 204)">
+         <path id="path2" fill="currentColor"/>
+        </g>
+        <g transform="matrix(1 0 0 -1 250 204)">
+         <path id="path3" fill="currentColor"/>
+        </g>
+        <g transform="matrix(1 0 0 -1 500 204)">
+         <path id="path4" fill="currentColor"/>
+        </g>
+      </svg>
+
+
+    </div>
+
+    <div>
+      Drag and Drop 展示區 (接收任何SVG)
+    </div>
+
     <script type="text/javascript">
+    function pathTween(d1, precision) {
+      return function () {
+        var path0 = this,
+          path1 = path0.cloneNode(),
+          n0 = path0.getTotalLength(),
+          n1 = (path1.setAttribute("d", d1), path1).getTotalLength();
+
+        var distances = [0],
+          i = 0,
+          dt = precision / Math.max(n0, n1);
+        while ((i += dt) < 1) distances.push(i);
+        distances.push(1);
+
+        var points = distances.map(function (t) {
+          var p0 = path0.getPointAtLength(t * n0),
+            p1 = path1.getPointAtLength(t * n1);
+          return d3.interpolate([p0.x, p0.y], [p1.x, p1.y]);
+        });
+
+        return function (t) {
+          return t < 1 ? "M" + points.map(function (p) {
+            return p(t);
+          }).join("L") : d1;
+        };
+      };
+    } // this is great
+
+    var path1 = "M104 99q21 -12 17 -15q-2 -8 -2 -13 q8 2 18 4q1 4 4 12q6 17 10 27q0 2 -1 3h-3q-8 -2 -29 -8 q-28 -7 -41 -10q-4 -5 -7 -1q-10 9 -11 25q0 4 -1 12v 8q-1 3 2 1q7 -6 8 -10q0 -8 -1 -12q-3 -16 8 -20q19 5 39 11q16 4 31 9q5 1 7 3q3 6 8 3q1 -2 4 -3t5 -2q 2 -3 2 -4t-3 -1q-8 -1 -9 -7q-13 -21 -17 -34h4l6 2q1 4 10 5q7 3 11 0l2 -1h5q7 -1 14 -5q2 -6 -6 -6q-16 8 -25 6q-28 -6 -45 -10l-2 -6q-1 -4 -1 -6q13 -20 43 -49q7 -7 24 -7q27 0 47 -8q3 -1 2 -2q0 -1 -3 -1q-23 4 -40 2q-14 -2 -26 9q-28 23 -49 49q-13 -34 -32 -46 q-14 -5 -33 -3q-5 0 0 0q28 0 45 19q10 12 16 36q-2 1 -5 5q-3 3 -3 4q-6 -2 -18 -5q-7 -3 -13 -4q-6 -3 -16 0q-5 1 0 2q15 2 57 12q3 17 -8 28q-4 4 1 2zM161 179q2 -2 2 -4q-1 -3 -4 -3q-2 -1 -9 -6q-11 -12 -25 -21q8 2 16 2q3 -1 1 -3q-2 -3 -5 -3q-11 -3 -17 -6 q-3 -2 -10 -2q-8 -1 -21 -8q-3 -2 -4 0q-2 3 1 4l2 2q1 0 3 2q-9 18 -12 27q-2 7 -3 14q-1 4 2 2q1 -3 3 -6q24 3 55 14q7 2 13 1zM140 181q-12 -3 -30 -9q-3 -2 -5 -2q-9 -4 -23 -2q7 -15 14 -33l12 4q5 2 8 3q17 10 28 34q1 2 0 4q-1 1 -4 1zM111 66q-2 0 -4 -1q1 -2 3 -3 q1 2 1 4z";
+    var path2 = "M140 100q-1 1 0 1h3l6 -4q0 -1 1 -2q2 -2 0 -3q-5 -4 -8 -8h3q6 1 13 4q2 4 7 5q6 -3 10 -6q2 -2 1 -4q-1 -3 -4 -4q-3 -2 -4 -6q-3 -5 -10 -18q-5 -8 -9 -15q10 -20 23 -35q5 -5 14 -5q31 -1 47 -11q3 -1 -1 -2q-4 0 -16 2q-14 3 -29 4q-13 1 -14 5q-9 8 -18 21q-7 10 -10 15q-20 -30 -33 -33q-5 -1 -1 2q16 12 30 36q-5 8 -14 22l-3 6q-11 -5 -12 -6q-3 0 0 2q1 1 5 4l5 5q-2 4 -4 7q-2 1 1 1q7 2 8 -2q3 2 3 4q-3 1 -2 2l4 1q8 10 8 15zM71 170q8 -8 11 -15v-1q0 -2 -4 -8q-2 -3 -6 -11q-2 -4 -3 -5q0 -5 -1 -9q-3 -20 -5 -67q-1 -49 5 -48q10 -9 10 -15v-2q-1 -1 -3 -1q-7 -1 -10 6q-3 4 -5 6q-5 7 -7 9q-4 1 -3 7q-3 3 9 4q-1 6 -1 19v22v22q1 14 1 21t-1 9q-25 -36 -37 -47q-2 -2 -3 -2q-1 1 0 3q27 37 40 68q2 6 4 10q9 18 6 24l-1 2q1 0 4 -1zM145 200q4 -7 6 -9q3 -2 0 -5q-17 -19 -30 -38q2 0 7 2q17 6 22 9q8 3 17 5q-1 2 -5 7q-1 2 1 2q13 -2 26 -12q1 -1 0 -1q5 -2 2 -8q-2 -3 -4 -2q-5 -2 -17 10q-40 -14 -56 -22q-6 -4 -14 -5q-4 -3 -3 5q-1 3 7 6q7 2 8 5q9 11 27 37q3 5 3 13v2q1 0 3 -1zM159 78q0 1 -1 2h-3q-9 -2 -17 -1q-5 -4 -7 -8q2 -8 11 -22l3 -3q8 14 14 32zM153 136q-3 2 1 2q14 -7 24 -8q10 -2 16 -13q0 -4 -6 -4q-3 -1 -5 1q-5 4 -16 8h-3q-1 1 2 3q1 0 1 1l-3 2q-7 4 -11 8zM114 130q-2 2 2 1q2 -3 10 -7q1 -1 1 -4q0 -4 -2 -8l-1 -1l-5 -5q-2 -4 -3 -5q-5 -9 -14 -3q-2 0 0 2q9 3 13 15v3q1 3 1 5q-2 2 -2 7z";
+    var path3 = "M149 208q24 -5 32 -17q2 -4 0 -7q-3 -2 -6 1l-12 6q-6 1 -3 5q3 1 -12 10q-6 3 1 2zM200 190q1 5 7 3q11 -3 17 -6q2 -3 -3 -3q-12 1 -27 -4q-22 -8 -30 -15q-4 -3 -5 -3q-1 1 2 4q11 9 4 7q-5 -2 -16 -5q-5 -2 -7 -2q-10 -3 -22 0q-3 1 0 2q8 -2 64 14q11 2 16 8zM198 169q4 -1 8 -4q3 -3 -1 -6q-6 -2 -9 -5q-9 -11 -26 -26q-3 -2 -4 -3q19 4 40 11q-1 3 2 5q1 2 3 1q6 -5 12 -7v-1q3 -1 2 -2q-1 -4 -5 -2q-8 1 -20 -2q-18 -5 -39 -15q-8 -3 -4 0q11 5 17 8q2 1 1 2q-20 -5 -43 -13q-1 -1 -2 -1q-8 -2 -15 -1q-4 0 1 2l6 2q19 6 28 9q-5 0 -7 8q-2 5 2 10q1 4 5 10l2 2q2 3 2 -2q-3 -9 -2 -12q1 -2 6 2q7 7 2 -2q-8 -10 -7 -15q23 12 38 34q0 1 1 2q5 6 3 9q-2 1 3 2zM149 105q3 2 0 -2q-4 -5 -2 -6q1 -6 0 -5q-7 0 -8 -11q-16 -65 -51 -106q-5 -4 -2 0q40 57 49 107q1 8 0 11v1q-5 3 14 11zM191 103q5 -2 6 -3q2 -3 0 -4q-7 -3 -13 -9q-17 -21 -39 -30q-3 -2 0 1q25 16 37 35q0 1 2 3q1 1 2 4q1 4 5 3zM191 70l6 -2q8 -2 11 -3q2 -2 1 -5q-12 -3 -16 -7q-31 -25 -50 -36q-4 0 -2 2q31 23 43 34q10 9 5 14q-3 0 -2 2q1 1 4 1zM200 29q2 0 6 -1h8q0 -4 -3 -7q-6 -1 -13 -7q-35 -24 -59 -34q-5 0 -1 2q14 7 42 26l2 2q9 7 11 11q0 1 2 4q2 5 5 4zM67 181q-2 2 2 1l16 -8q4 -2 7 -3q3 -2 3 -3q1 -1 -1 -2q-1 -4 -9 -2h-3q-3 2 -5 1q-3 0 -1 2q2 3 -1 6q-2 1 -6 4zM76 103q4 0 10 -1q3 0 3 -2q1 -1 -6 -3q-6 -3 -13 -10q-3 -3 -1 2v2q0 1 -1 1q-2 0 -5 -1q-2 0 0 2q10 4 10 8q1 2 3 2zM89 74q-1 -4 -4 -3l-6 -3q-2 -3 -4 -4q-2 -2 -2 1q0 1 -3 0q-2 -2 -8 -2q-2 -1 -1 1q3 1 9 4q2 1 3 2q3 2 5 3q4 3 11 3q1 0 0 -2zM88 41q5 -2 11 -4q1 -1 0 -3q-1 -1 -1 -2l-1 -1q-3 0 -4 -2q-4 -7 -5 -11q2 -1 4 1q2 -1 5 1q2 0 2 -2q0 -3 -2 -3q-2 -1 -5 -2h-4q-7 -2 -11 -3q-5 -2 -7 -1v2q6 0 11 5q5 9 6 15q0 3 -1 3q0 1 -3 1q-9 -6 -15 -7q-3 -1 -1 1q7 4 18 9q2 3 3 3zM57 25h1q3 -6 5 -16q1 -8 5 -9q2 -2 2 -3q-2 -1 -3 -1q-2 1 -4 3q-3 1 -4 2q-2 1 2 5q-2 12 -4 16v3zM109 132q0 -3 -5 -2q-8 0 -13 -3q-3 -1 -4 -1t1 2q4 3 -2 2q-43 -9 -62 -15q-6 -2 -11 1q-4 1 1 2q2 0 12 2q12 3 22 6q31 7 46 9q3 2 4 2h2q2 0 4 -1q0 -1 2 -1q1 -1 2 -1q2 -1 1 -2z";
+    var Circle = "M250 95 A100 100, 0, 1, 0, 250 105 z";
       // Your beautiful D3 code will go here
+
+      d3.select('#path2')
+        .attr('d', Circle)
+        .style("fill","transparent")
+        .style("stroke","black")
+        .transition()
+        .duration(5000)
+        .attrTween("d", pathTween(path1, 3))
+        .transition()
+        .duration(5000)
+        .attrTween("d", pathTween(Circle, 3))
+        .style("fill","transparent")
+        .style("stroke","black");
+
+      d3.select('#path3')
+        .attr('d', Circle)
+        .style("fill","transparent")
+        .style("stroke","black")
+        .transition()
+        .duration(5000)
+        .attrTween("d", pathTween(path2, 3))
+        .transition()
+        .duration(5000)
+        .attrTween("d", pathTween(Circle, 3))
+        .style("fill","transparent")
+        .style("stroke","black");
+
+      d3.select('#path4')
+        .attr('d', Circle)
+        .style("fill","transparent")
+        .style("stroke","black")
+        .transition()
+        .duration(5000)
+        .attrTween("d", pathTween(path3, 3))
+        .transition()
+        .duration(5000)
+        .attrTween("d", pathTween(Circle, 3))
+        .style("fill","transparent")
+        .style("stroke","black");
+
     </script>
-  </body>
-</html>
-  
+  </html>
